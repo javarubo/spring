@@ -6,6 +6,7 @@ import org.hibernate.ScrollableResults;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.NativeQuery;
+import org.hibernate.query.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.Scope;
@@ -45,8 +46,7 @@ public class UserrepositoryImpl implements UserRepository {
 
     }
 
-    @Transactional(rollbackFor = Throwable.class,noRollbackFor = IndexOutOfBoundsException.class,readOnly = true)
-
+    @Transactional(rollbackFor = Throwable.class, noRollbackFor = IndexOutOfBoundsException.class, readOnly = true)
     public void update(User user) {
         Session session = sessionFactory.getCurrentSession();
         session.update(user);
@@ -60,8 +60,12 @@ public class UserrepositoryImpl implements UserRepository {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public User getByUsernameAndPassword(String username, String password) throws SQLException {
-        return null;
+        NativeQuery<User> query = sessionFactory.getCurrentSession().createNativeQuery("SELECT * FROM user WHERE username = :username AND password=:password", User.class);
+        query.setParameter("username", username);
+        query.setParameter("password", password);
+        return query.uniqueResult();
     }
 
     @Transactional
