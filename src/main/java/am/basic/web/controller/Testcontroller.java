@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 
@@ -25,13 +26,22 @@ public class Testcontroller {
     }
 
 
+    @RequestMapping(method = RequestMethod.GET, path = "/gotoregistr")
+    public String gotoRe() {
+        return "registr";
+    }
+
+
     @RequestMapping(method = RequestMethod.POST, path = "/login")
     public ModelAndView login(@RequestParam String username, @RequestParam("pass") String password,
                               HttpSession session, @CookieValue(name = "username",value = "surname",required = false) String str)
                                 throws SQLException {
 
 
-        User user = userRepository.getByUsernameAndPassword(username, password);
+
+
+
+         User user = userRepository.getByUsernameAndPassword(username, password);
         if (user != null) {
             session.setAttribute("ttghg", user);
             return new ModelAndView("profile");
@@ -63,6 +73,14 @@ public class Testcontroller {
 
 
     }
+
+
+
+
+
+
+
+
 
 
 }

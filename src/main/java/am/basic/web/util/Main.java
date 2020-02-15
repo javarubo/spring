@@ -5,8 +5,26 @@ import am.basic.web.service.Userservice;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
+
+
+        Process process = Runtime.getRuntime().exec("ipconfig");
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(process.getErrorStream()));
+        String s = null;
+        while ((s = bufferedReader.readLine()) != null) {
+            System.out.println(s);
+        }
+
+        bufferedReader = new BufferedReader(new InputStreamReader(process.getInputStream()));
+        while ((s = bufferedReader.readLine()) != null) {
+            System.out.println(s);
+        }
+
     /*    UserrepositoryImpl userrepository1 = new UserrepositoryImpl();
         User user = new User();
 
@@ -58,7 +76,7 @@ public class Main {
 */
 
 
-        ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
+     /*   ApplicationContext applicationContext = new ClassPathXmlApplicationContext("application-context.xml");
         System.out.println(1);
 
         Userservice userservice = applicationContext.getBean(Userservice.class);
@@ -73,20 +91,13 @@ public class Main {
         System.out.println(userservice1.getUserrepositoryImpl());
 
 
-
-
         System.out.println("This changed commit");
         System.out.println("This changed commit");
         System.out.println("This changed commit");
         System.out.println("This changed commit");
 
 
-        System.out.println("This is devvvv commit");
-
-
-
-
-
+        System.out.println("This is devvvv commit");*/
 
 
     }

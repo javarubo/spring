@@ -19,6 +19,6 @@
     Password : <input type="password" name="pass"><br/>
     <input type="submit" name="Sign in">
 </form>
-<a href="/registr.jsp">for Registration</a>
+<a href="/gotoregistr">for Registration</a>
 </body>
 </html>
